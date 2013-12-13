@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="woo" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="3" osVersion="*" schemaVersion="2013-10.2.2">
+  <Role name="web">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="ServiceBus" value="Endpoint=sb://woohoo.servicebus.windows.net/;SharedAccessKeyName=all;SharedAccessKey=Pf33dvf1c0+kOtOBvnW1lOeUB4BAQgrlm9/CK5J3YtI=" />
+      <Setting name="Blob" value="DefaultEndpointsProtocol=https;AccountName=woohoo;AccountKey=wto0S0mWT7RmiEqlz2wtqUJZfxj+4T0qvfjjgK2VzhpfRFiKKZWp00Z6eZUaQPB/4bVfVwPSinQJ+UUhQQgJcA==" />
+    </ConfigurationSettings>
+  </Role>
+</ServiceConfiguration>
