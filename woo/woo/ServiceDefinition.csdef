@@ -14,5 +14,13 @@
     <Imports>
       <Import moduleName="Diagnostics" />
     </Imports>
+    <ConfigurationSettings>
+      <Setting name="ServiceBus" />
+      <Setting name="Blob" />
+    </ConfigurationSettings>
+    <LocalResources>
+      <LocalStorage name="WriteStorage" cleanOnRoleRecycle="true" sizeInMB="2048" />
+      <LocalStorage name="ReadStorage" cleanOnRoleRecycle="true" sizeInMB="2048" />
+    </LocalResources>
   </WebRole>
 </ServiceDefinition>
