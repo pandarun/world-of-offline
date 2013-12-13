@@ -1,0 +1,45 @@
+
+
+<div class="container">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Woo</a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <img src="https://s3.amazonaws.com/media.jetstrap.com/sw33HcufSAC2LtOmMHMI_photo.jpg" class="pull-right" width="60" height="60">
+        </div>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-8">
+            <form>
+                <div class="form-group">
+                    <label>
+                        Поиск встреч
+                    </label>
+                    <input type="text" class="form-control" placeholder="введите название встречи">
+                </div>
+            </form>
+        </div>
+        <div class="col-md2 col-md-2" style="display: block;">
+            <div class="form-group">
+                <label>
+                    Начало
+                </label>
+                <input type="datetime-local" class="form-control">
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>
+                    Окончание
+                </label>
+                <input type="datetime-local" class="form-control">
+            </div>
+        </div>
+    </div>
+
+    <div ui-view="" > </div>
+</div>
+
+

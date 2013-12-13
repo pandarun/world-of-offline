@@ -24,7 +24,7 @@ namespace web.Controllers
             public int Id { get; set; }
             public string Name { get; set; }
         }
-        public async Task<Model> Get(int id)
+        public Model Get(int id)
         {
             var model = new Model
             {
@@ -32,7 +32,9 @@ namespace web.Controllers
                 Name = id.ToString()
             };
 
-            await _hub.SendToTopicAsync("lucene", "any", new GenericSearchItem(model));
+            var genericSearchItem = new GenericSearchItem(model);
+
+            _hub.SendToTopicAsync("lucene", "any", genericSearchItem);
 
 
             return model;
