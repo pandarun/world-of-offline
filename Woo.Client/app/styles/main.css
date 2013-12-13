@@ -63,6 +63,11 @@ div.approved {
   padding-left: 10px;
 }
 
+div.visited{
+    border-left: #7a43b6 14px solid;
+    padding-left: 10px;
+}
+
 /* Supporting marketing content */
 .marketing {
   margin: 40px 0;

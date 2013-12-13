@@ -1,6 +1,6 @@
 
     <li class="list-group-item" ng-repeat="meeting in meetings">
-        <div ng-class="{approved : meeting.isApproved}" ng-class="{visited : meeting.isVisited}">
+        <div ng-class="{approved : meeting.isApproved, visited : meeting.isVisited}" >
             <span class="label label-info">{{meeting.participants.length}}</span>
             {{meeting.description}}
             <div class="row" style="margin: 5px 0 0 10px" >
