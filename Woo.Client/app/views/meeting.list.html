@@ -1,0 +1,13 @@
+
+    <li class="list-group-item" ng-repeat="meeting in meetings">
+        <div ng-class="{approved : meeting.isApproved}" ng-class="{visited : meeting.isVisited}">
+            <span class="label label-info">{{meeting.participants.length}}</span>
+            {{meeting.description}}
+            <div class="row" style="margin: 5px 0 0 10px" >
+                <div style="display: block; float: left;" ng-repeat="participant in meeting.participants">
+                    <img ng-src="{{participant.imageSrc}}" width="60" height="60">
+                </div>
+            </div>
+        </div>
+
+    </li>
