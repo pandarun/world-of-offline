@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Lucene.Net.Store;
 using Lucene.Net.Store.Azure;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using System.Linq;
@@ -9,6 +10,7 @@ using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
 using ServiceBusHub;
 using core.Business;
+using StructureMap.Diagnostics;
 
 namespace web
 {
@@ -43,7 +45,7 @@ namespace web
                 }
                 var localDirectory = new Lucene.Net.Store.SimpleFSDirectory(new DirectoryInfo(combine));
                 var masterDirectory = new AzureDirectory(account, s);
-                var irs = new IntermediateReaderService(masterDirectory, hub, localDirectory);
+                var irs = new IntermediateReaderService(masterDirectory, hub, localDirectory, true);
 
                 masterDirectory.Dispose();
 
