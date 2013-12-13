@@ -19,5 +19,10 @@ namespace web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+        public void Application_EndRequest(object serder, EventArgs args)
+        {
+            StructureMap.ObjectFactory.ReleaseAndDisposeAllHttpScopedObjects();
+        }
     }
 }

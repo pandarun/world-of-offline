@@ -16,6 +16,10 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 
+using core.Business;
+using Lucene.Net.Store;
+using Microsoft.WindowsAzure.ServiceRuntime;
+using ServiceBusHub;
 using StructureMap;
 namespace web.DependencyResolution {
     public static class IoC {
@@ -27,7 +31,21 @@ namespace web.DependencyResolution {
                                         scan.TheCallingAssembly();
                                         scan.WithDefaultConventions();
                                     });
-            //                x.For<IExample>().Use<Example>();
+
+                            x.For<Lucene.Net.Store.Directory>()
+                             .Singleton()
+                             .Use(() => new SimpleFSDirectory(new System.IO.DirectoryInfo(System.IO.Path.Combine(RoleEnvironment.GetLocalResource("ReadStorage").RootPath, "lucene"))));
+
+
+                            x.For<core.Business.ISearchReaderService>()
+                             .HttpContextScoped()
+                             .Use<SearchReaderService>();
+
+                            x.For<ServiceBusHub.IHub>()
+                             .Singleton()
+                             .Use<ServiceBusHub.Hub>()
+                             .Ctor<string>("connectionString")
+                             .Is(RoleEnvironment.GetConfigurationSettingValue("ServiceBus"));
                         });
             return ObjectFactory.Container;
         }
