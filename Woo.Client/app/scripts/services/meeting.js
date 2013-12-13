@@ -36,6 +36,7 @@ angular.module('wooclientApp')
         },
         {
             description: "Схожу в кино с девушкой, желательно на комедию.",
+            isApproved : true,
             participants:[{
                 userId : 1,
                 name : "Вася",
@@ -87,6 +88,7 @@ angular.module('wooclientApp')
         },
         {
             description: "Хоккей в Сокольниках, приглашается команда в соперники. Не забудьте взять шайбу, а то будет как в прошлый раз :)).",
+            isApproved : true,
             participants:[{
                 userId : 1,
                 name : "Вася",

@@ -51,6 +51,18 @@ body {
   padding: 14px 24px;
 }
 
+/* custom li styling */
+
+li.list-group-item {
+  border: 0;
+  margin: 5px 0;
+}
+
+div.approved {
+  border-left: green 14px solid;
+  padding-left: 10px;
+}
+
 /* Supporting marketing content */
 .marketing {
   margin: 40px 0;
