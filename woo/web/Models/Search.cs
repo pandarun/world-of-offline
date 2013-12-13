@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Lucene.Net.Analysis.Standard;
@@ -55,9 +56,14 @@ namespace core.Business
         }
     }
 
+    public class SearchResultItem
+    {
+        public string Link { get; set; }
+        public float Score { get; set; }
+    }
     public class SearchResult
     {
-        public string[] Links { get; set; }
+        public SearchResultItem[] Links { get; set; }
         public int Total { get; set; }
         public int ElapsedMilliseconds { get; set; }
     }
@@ -94,17 +100,18 @@ namespace core.Business
 
         public SearchResult GetSearchResult(Query query, Filter filter, int skip, int take, Sort sort)
         {
-            var searchResult = _luceneSearcher.Search(query, filter, skip + take, sort);
-
+            var s = Stopwatch.StartNew();
+            var searchResult = _luceneSearcher.Search(query, filter, skip + take);
+            s.Stop();
             return new SearchResult
             {
                 Links = searchResult.ScoreDocs
                                     .Skip(skip)
                                     .Take(take)
-                                    .Select(storeDoc => _luceneSearcher.Doc(storeDoc.Doc).GetField(SearchSettings.Field_ID).StringValue)
+                                    .Select(storeDoc => new SearchResultItem { Link = _luceneSearcher.Doc(storeDoc.Doc).GetField(SearchSettings.Field_ID).StringValue, Score = storeDoc.Score })
                                     .ToArray(),
                 Total = searchResult.TotalHits,
-                ElapsedMilliseconds = 0
+                ElapsedMilliseconds = (int)s.ElapsedMilliseconds
             };
         }
 
@@ -297,15 +304,42 @@ namespace core.Business
 
     public class IntermediateReaderService : IIntermediateReaderService
     {
+        private readonly bool _enableNearRealTimeCache;
         private IDisposable _termprorarySubscription;
         private IndexWriter _writer;
-        private Task<IDisposable> _subscription;
+        private IDisposable _subscription;
+        private const int CacheInSeconds = 5;
+        private static readonly object Sync = new object();
+        private static int HasEntitites = 0;
+        private Timer _timer;
 
-        public IntermediateReaderService(AzureDirectory masterDirectory, IHub hub, Directory cacheDirectory)
+        class DiposableArray : IDisposable
         {
+            private readonly IEnumerable<IDisposable> _disposables;
+
+            public DiposableArray(IEnumerable<IDisposable> disposables)
+            {
+                _disposables = disposables;
+            }
+
+            public void Dispose()
+            {
+                if (_disposables != null)
+                {
+                    foreach (var disposable in _disposables)
+                    {
+                        disposable.Dispose();
+                    }
+                }
+            }
+        }
+
+        public IntermediateReaderService(AzureDirectory masterDirectory, IHub hub, Directory cacheDirectory, bool enableNearRealTimeCache = false)
+        {
+            _enableNearRealTimeCache = enableNearRealTimeCache;
             var topicName = "lucene";
             var subscriptionName = "i_" + Guid.NewGuid().ToString().Replace("-", string.Empty);
-
+            
             hub.CreateSubscription(topicName, subscriptionName)
                .ContinueWith(t =>
                {
@@ -315,14 +349,37 @@ namespace core.Business
 
                    _writer = new IndexWriter(cacheDirectory, new StandardAnalyzer(Version.LUCENE_30), Lucene.Net.Index.IndexWriter.MaxFieldLength.UNLIMITED);
 
-                   return hub.SubscribeWithRoutingKey(topicName, subscriptionName, Message);
+                   var subscriptions = Enumerable.Range(0, 10).Select(_ => hub.SubscribeWithRoutingKey(topicName, subscriptionName, Message)).ToArray();
+
+                   return Task.WhenAll(subscriptions)
+                       .ContinueWith(_ => new DiposableArray(subscriptions.Select(s => s.Result)) as IDisposable);
                })
+               .Unwrap()
                .ContinueWith(t =>
                {
                    _subscription = t.Result;
+
+                   if (_enableNearRealTimeCache)
+                   {
+                       _timer = new Timer(CacheInSeconds*1000);
+                       _timer.Elapsed += TimerOnElapsed;
+                       _timer.Start();
+                   }
                })
                .Wait();
 
+        }
+
+        private void TimerOnElapsed(object sender, ElapsedEventArgs elapsedEventArgs)
+        {
+            lock (Sync)
+            {
+                if (HasEntitites > 0)
+                {
+                    _writer.Commit();
+                    HasEntitites = 0;
+                }
+            }
         }
 
         private BrokeredMessageResults Message(GenericPayloadDeliverInfo genericPayloadDeliverInfo)
@@ -330,7 +387,17 @@ namespace core.Business
             var body = genericPayloadDeliverInfo.Payload.GetBody<GenericSearchItem>().GetBody();
 
             _writer.UpdateDocument(SearchWriterService.GetTerm(body), SearchWriterService.GetDocument(body));
-            _writer.Commit();
+            if (!_enableNearRealTimeCache)
+            {
+                _writer.Commit();
+            }
+            else
+            {
+                lock (Sync)
+                {
+                    HasEntitites++;
+                }
+            }
 
             return BrokeredMessageResults.NoMatter;
         }
@@ -350,6 +417,11 @@ namespace core.Business
             if (_termprorarySubscription != null)
             {
                 _termprorarySubscription.Dispose();
+            }
+
+            if (_timer != null)
+            {
+                _timer.Dispose();
             }
         }
     }
