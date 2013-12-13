@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace woo.data
 {
-    public class Class1
+    public class Message
     {
+        public int Id { get; set; }
+
+        public int EventId { get; set; }
+
+        public virtual Event Event { get; set; }
     }
 }
