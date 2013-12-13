@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace woo.data
+namespace woo.data.entity
 {
     public class Message
     {
