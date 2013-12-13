@@ -50,12 +50,22 @@
     <Compile Include="entity\Activity.cs" />
     <Compile Include="entity\Message.cs" />
     <Compile Include="entity\User.cs" />
+    <Compile Include="Migrations\201312131914482_first.cs" />
+    <Compile Include="Migrations\201312131914482_first.Designer.cs">
+      <DependentUpon>201312131914482_first.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WooDataContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201312131914482_first.resx">
+      <DependentUpon>201312131914482_first.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
