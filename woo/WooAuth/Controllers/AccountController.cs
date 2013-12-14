@@ -292,8 +292,8 @@ namespace WooAuth.Controllers
             //    ClaimsIdentity identity = new ClaimsIdentity(claims, OAuthDefaults.AuthenticationType);
             //    Authentication.SignIn(identity);
             //}
-
-            return Redirect("/Token?token=" + uniqName);
+            uniqName = HttpUtility.UrlEncodeUnicode(uniqName);
+            return Redirect("http://localhost:49451/Token/Index?token=" + uniqName);
             //return Ok();
         }
 
