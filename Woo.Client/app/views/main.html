@@ -1,6 +1,7 @@
 
+<iframe ng-if="!token" ng-src="{{url}}"></iframe>
 
-<div class="container">
+<div ng-if="token" class="container">
     <div class="page-header" style="overflow: hidden">
 
         <img  class="pull-left" ng-src="{{user.imageSrc}}" width="60" height="60">

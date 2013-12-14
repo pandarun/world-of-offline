@@ -30,9 +30,11 @@ namespace WooAuth.Controllers
         public AccountController()
             : this(Startup.UserManagerFactory(), Startup.OAuthOptions.AccessTokenFormat)
         {
+            UserManager = Startup.UserManagerFactory();
+            AccessTokenFormat = Startup.OAuthOptions.AccessTokenFormat;
         }
 
-        public AccountController(UserManager<IdentityUser> userManager,
+        private AccountController(UserManager<IdentityUser> userManager,
             ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
         {
             UserManager = userManager;
