@@ -9,7 +9,8 @@ namespace woo.data.entity
     public class User
     {
         public int Id { get; set; }
-        public string USerName { get; set; }
+        public string UserName { get; set; }
+        public string Provider { get; set; }
         public string AvatarPic { get; set; }
         public string OAuthLogin { get; set; }
 

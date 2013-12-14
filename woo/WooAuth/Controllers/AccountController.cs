@@ -248,8 +248,7 @@ namespace WooAuth.Controllers
             if (usr == null) {
                 dc.User.Add(new User
                 {
-                    OAuthLogin = uniqName,
-                    AvatarPic = "http://graph.facebook.com/67563683055/picture?type=square",
+                    AvatarPic = "http://graph.facebook.com/" + externalLogin.ProviderKey + "/picture?type=large",
                     USerName = externalLogin.UserName
                 });
             }
