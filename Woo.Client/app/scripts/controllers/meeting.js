@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('wooclientApp')
-    .controller('MeetingCtrl', function ($scope, $resource,meeting) {
+    .controller('MeetingCtrl', function ($scope, $resource) {
 
-        $scope.meeting = meeting;
+        console.log('MeetingCtrl');
 
         $scope.submit = function(){
             var meeting = $resource('meetings')
