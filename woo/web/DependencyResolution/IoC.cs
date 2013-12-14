@@ -41,11 +41,14 @@ namespace web.DependencyResolution {
                              .HttpContextScoped()
                              .Use<SearchReaderService>();
 
+                            string sb;
+                            try { sb = RoleEnvironment.GetConfigurationSettingValue("ServiceBus"); }
+                            catch { sb = "error"; }
                             x.For<ServiceBusHub.IHub>()
                              .Singleton()
                              .Use<ServiceBusHub.Hub>()
                              .Ctor<string>("connectionString")
-                             .Is(RoleEnvironment.GetConfigurationSettingValue("ServiceBus"));
+                             .Is(sb);
                         });
             return ObjectFactory.Container;
         }
