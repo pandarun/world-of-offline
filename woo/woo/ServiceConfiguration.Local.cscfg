@@ -5,7 +5,6 @@
     <ConfigurationSettings>
       <Setting name="ServiceBus" value="Endpoint=sb://woohoo.servicebus.windows.net/;SharedAccessKeyName=all;SharedAccessKey=Pf33dvf1c0+kOtOBvnW1lOeUB4BAQgrlm9/CK5J3YtI=" />
       <Setting name="Blob" value="DefaultEndpointsProtocol=https;AccountName=woohoo;AccountKey=wto0S0mWT7RmiEqlz2wtqUJZfxj+4T0qvfjjgK2VzhpfRFiKKZWp00Z6eZUaQPB/4bVfVwPSinQJ+UUhQQgJcA==" />
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="" />
     </ConfigurationSettings>
   </Role>
 </ServiceConfiguration>
