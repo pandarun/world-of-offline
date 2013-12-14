@@ -4,13 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using woo.data.entity;
+
+
 
 namespace web.Models
 {
     public interface ISearchUtils
     {
-        void IndexEvent(Event ev, woo.data.entity.User[] us);
+        void IndexEvent(woo.data.entity.Event ev, woo.data.entity.User[] us);
     }
 
     public class SearchUtils : ISearchUtils
@@ -32,7 +33,7 @@ namespace web.Models
             public string Users { get; set; }
         }
 
-        public void IndexEvent(Event ev, woo.data.entity.User[] us)
+        public void IndexEvent(woo.data.entity.Event ev, woo.data.entity.User[] us)
         {
             var eventIndex = new EventSearchIndex
             {

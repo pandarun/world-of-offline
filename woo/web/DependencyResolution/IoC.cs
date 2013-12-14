@@ -21,6 +21,7 @@ using Lucene.Net.Store;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using ServiceBusHub;
 using StructureMap;
+using woo.data;
 namespace web.DependencyResolution {
     public static class IoC {
         public static IContainer Initialize() {
@@ -49,6 +50,10 @@ namespace web.DependencyResolution {
                              .Use<ServiceBusHub.Hub>()
                              .Ctor<string>("connectionString")
                              .Is(sb);
+
+                            x.For<WooDataContext>()
+                            .HttpContextScoped()
+                            .Use<WooDataContext>();
                         });
             return ObjectFactory.Container;
         }

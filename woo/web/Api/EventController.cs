@@ -4,12 +4,24 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using web.Models;
+using web.Models.Event;
 using woo.data.entity;
 
 namespace web.Api
 {
     public class EventController : BaseApiController
     {
+
+        IReadSearchUtils _readSerachUtils;
+        ISearchUtils _searchUtils;
+
+        public EventController(IReadSearchUtils readSerachUtils, ISearchUtils searchUtils)
+        {
+            _readSerachUtils = readSerachUtils;
+            _searchUtils = searchUtils;
+        }
+
         // GET api/<controller>
         public IEnumerable<Event> Get()
         {
@@ -18,14 +30,19 @@ namespace web.Api
 
         public IEnumerable<Event> Get(string eventText, int skip, int take)
         {
-            return DataContext.Event.Skip(skip).Take(take);
+            int[] eventIds = _readSerachUtils.FindEvents(eventText, skip, take);
+
+            return   from e in DataContext.Event
+                      where eventIds.Contains(e.Id)
+                      select e;
+            
         }
 
         // GET api/<controller>/5
-        public Event Get(int id)
+        public Event Get(EventGetModel m)
         {
             return (from e in DataContext.Event
-                   where e.Id == id
+                   where e.Id == m.EventId
                    select e).FirstOrDefault();
         }
 
@@ -33,6 +50,7 @@ namespace web.Api
         public void Post([FromBody]Event e)
         {
             DataContext.Event.Add(e);
+            DataContext.SaveChanges();
         }
 
         /// <summary>
@@ -52,7 +70,6 @@ namespace web.Api
             event_.Users.Add(user);
             user.Events.Add(event_);
             DataContext.SaveChanges();
-
         }
 
         // PUT api/<controller>/5
