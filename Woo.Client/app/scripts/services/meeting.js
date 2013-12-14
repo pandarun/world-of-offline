@@ -120,9 +120,14 @@ angular.module('wooclientApp')
             return meetings;
         }
 
+        function getMeetingById(id){
+            return getMeetings()[id];
+        }
+
 
         // Public API here
         return {
-            getMeetings:getMeetings
+            getMeetings:getMeetings,
+            getMeetingById : getMeetingById
         };
     });
