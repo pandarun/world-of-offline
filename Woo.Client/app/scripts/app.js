@@ -61,6 +61,18 @@ angular.module('wooclientApp', [
 
 
                         return deferred.promise;
+                    }],
+
+                    user : ['$q','user',function($q,user){
+
+                        var deferred = $q.defer();
+
+                        var authorized_user = user.authorize();
+
+                        deferred.resolve(authorized_user);
+
+
+                        return deferred.promise;
                     }]
 
                 }

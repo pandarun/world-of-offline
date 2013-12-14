@@ -3,7 +3,7 @@
         <div ng-class="{'bs-callout-success' : meeting.isApproved, 'bs-callout-visited' : meeting.isVisited, 'bs-callout-request' : meeting.isRequest}" class="bs-callout " >
             <p>{{meeting.description}}</p>
             <div class="row">
-                <div class="col-md-1 center-block"><span class="label label-info">+ {{meeting.participants.length}}</span></div>
+                <div class="col-md-1 center-block" style="margin: 6px 0"><span class="label label-info" >+ {{meeting.participants.length}}</span></div>
                 <div style="display: block; float: left;" ng-repeat="participant in meeting.participants">
                     <img ng-src="{{participant.imageSrc}}" width="60" height="60">
                 </div>
