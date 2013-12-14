@@ -64,6 +64,7 @@ namespace web
             config.Formatters.Remove(config.Formatters.XmlFormatter);
             //config.Filters.Add(new TokenFilter());
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

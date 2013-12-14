@@ -175,6 +175,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\BaseApiController.cs" />
+    <Compile Include="Api\MessageController.cs" />
     <Compile Include="Api\UserController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -216,6 +217,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Hub.cs" />
     <Compile Include="Models\Search.cs" />
+    <Compile Include="Models\User\UserGetModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebRole.cs" />
     <Compile Include="Data\WooDataContext.cs" />

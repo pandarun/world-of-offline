@@ -148,10 +148,17 @@ namespace core.Business
         {
             lock (_sync)
             {
-                if (_entriesToCommit > 0)
+                try
                 {
-                    _luceneWriter.Commit();
-                    _entriesToCommit = 0;
+                    if (_entriesToCommit > 0)
+                    {
+                        _luceneWriter.Commit();
+                        _entriesToCommit = 0;
+                    }
+                }
+                catch
+                {
+                    
                 }
             }
         }
@@ -421,7 +428,9 @@ namespace core.Business
 
             if (_timer != null)
             {
+                _timer.Stop();
                 _timer.Dispose();
+                TimerOnElapsed(null, null);
             }
         }
     }
