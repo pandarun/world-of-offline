@@ -3,7 +3,7 @@
 angular.module('wooclientApp')
   .controller('MainCtrl', function ($scope,meetings, user) {
 
-    $scope.token = settings.token;
+//    $scope.token = settings.token;
 
 
     $scope.meetings = meetings;

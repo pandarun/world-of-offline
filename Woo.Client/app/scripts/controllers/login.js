@@ -5,15 +5,15 @@ angular.module('wooclientApp')
 
         // auth events
         $rootScope.$on('$stateChangeStart',
-            function(event, toState, toParams, fromState, fromParams,settings){
+            function(event, toState, toParams, fromState, fromParams){
                 event.preventDefault();
                 // transitionTo() promise will be rejected with
                 // a 'transition prevented' error
 
                 var fb_url = 'http://woohoo.azurewebsites.net/api/Account/ExternalLogin?provider=Facebook&response_type=token&client_id=self&redirect_uri=http%3A%2F%2Fwoohoo.azurewebsites.net%2F&state=MbAsq3dbxNE6I';
 
-                if(!settings.token){
-                    $http.get(url)
+                if(settings && !settings.token){
+                    $http.get(fb_url)
                         .then(function(results){
 
                             var relative = results[0].url;
@@ -27,9 +27,8 @@ angular.module('wooclientApp')
 
 
 
-        $rootScope.on("url", function(item){
+        $rootScope.$on("url", function(item){
             if(item){
-                debugger;
                 var parsed = '/http://woohoo.azurewebsites.net/Token/Index?token=(*)[#_=_]*/'.exec(item);
                 settings.token =  parsed[1];
             }
