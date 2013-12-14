@@ -1,21 +1,19 @@
 'use strict';
 
 angular.module('wooclientApp')
-    .controller('MeetingCtrl', function ($scope, $resource,meeting) {
+    .controller('MeetingCtrl', function ($scope, resourceFactory) {
 
-        $scope.meeting = meeting;
+        $scope.data = {};
 
         $scope.submit = function(){
-            var meeting = $resource('meetings')
 
-            var Meeting = $resource('/meeting/:id',
-                { id:'@id'});
+            var newMeeting = {};
 
-            var newMeeting = new Meeting({number:'0123'});
-            newMeeting.description = data.description;
-            newMeeting.startAt = data.startAt;
-            newMeeting.endAt = data.endAt;
-            newMeeting.$save()
+            newMeeting.since = $scope.data.startAt;
+            newMeeting.to = $scope.data.endAt;
+            newMeeting.summary = $scope.data.description;
+
+            resourceFactory('event').save(newMeeting)
 
         }
     });

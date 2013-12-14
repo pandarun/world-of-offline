@@ -83,8 +83,20 @@ angular.module('wooclientApp', [
                 templateUrl: "views/meeting.list.html"
             })
             .state('meeting',{
+                abstract    : true,
                 url         : "/meetings",
-                controller  : 'MeetingCtrl',
+                templateUrl : "views/meeting.html"
+            })
+            .state('meeting.create',{
+                url         : '/create',
+                templateUrl : "views/meeting.new.html",
+                controller  : 'MeetingCtrl'
+
+            })
+            .state('meeting.details', {
+                url         : "/:id",
+                templateUrl : "views/meeting.details.html",
+                controller  : 'MeetingDetailsCtrl',
                 resolve     : {
                     meeting : ['$q','Meetings','$stateParams', function($q, Meetings, $stateParams){
 
@@ -101,16 +113,6 @@ angular.module('wooclientApp', [
                         return deferred.promise;
                     }]
                 }
-            })
-            .state('meeting.create',{
-                url         : '',
-                templateUrl : "views/meeting.new.html"
-
-            })
-            .state('meeting.details', {
-                url         : "/:id",
-                templateUrl : "views/meeting.details.html"
-
             });
 
 
