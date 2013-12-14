@@ -57,7 +57,13 @@ namespace web
                 .ContinueWith(_ => tasks.Where(t => !t.IsFaulted && t.IsCompleted).Select(t => t.Result).ToArray())
                 .ContinueWith(t => _localIndexes = t.Result);
 
-            _luceneWriter = new SearchWriterService(new AzureDirectory(account, "lucene", new Lucene.Net.Store.SimpleFSDirectory(new DirectoryInfo(Path.Combine(writePath, "lucene")))), true);
+            string writeFolder = Path.Combine(writePath, "lucene");
+            if (!System.IO.Directory.Exists(writeFolder))
+            {
+                System.IO.Directory.CreateDirectory(writeFolder);
+            }
+
+            _luceneWriter = new SearchWriterService(new AzureDirectory(account, "lucene", new Lucene.Net.Store.SimpleFSDirectory(new DirectoryInfo(writePath))), true);
             var subscriptionName = string.Format("{0:yyyyMMddHHmmss}_{1}", DateTime.UtcNow, Guid.NewGuid().ToString().Replace("-", string.Empty));
             hub.CreateSubscription("lucene", subscriptionName)
                 .ContinueWith(t =>

@@ -18,5 +18,7 @@
     <AzureStorageAccountLabel>bsicarww</AzureStorageAccountLabel>
     <AzureStorageAccountName>bsicarww</AzureStorageAccountName>
     <AzureAppendTimestampToDeploymentLabel>True</AzureAppendTimestampToDeploymentLabel>
+    <EnableRemoteDebugger>True</EnableRemoteDebugger>
+    <RemoteDebuggerConnectorCertificateThumbprint>1C0225D8657A9A3BA0A1F6FAEF0C1B801A4E79CE</RemoteDebuggerConnectorCertificateThumbprint>
   </PropertyGroup>
 </Project>
