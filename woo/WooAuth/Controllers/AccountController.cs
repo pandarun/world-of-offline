@@ -245,6 +245,8 @@ namespace WooAuth.Controllers
                 return new ChallengeResult(provider, this);
             }
 
+
+
             IdentityUser user = await UserManager.FindAsync(new UserLoginInfo(externalLogin.LoginProvider,
                 externalLogin.ProviderKey));
 
