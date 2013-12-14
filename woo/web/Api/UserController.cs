@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using web.Models.User;
 using woo.data.entity;
 
 namespace web.Api
@@ -16,13 +17,23 @@ namespace web.Api
             return DataContext.User;
         }
 
-        // GET api/<controller>/5
-        public User Get(int id)
+        public object Get(UserGetModel m)
         {
+            if (m.EventId != null)
+            {
+                Event event_ = (from e in DataContext.Event
+                                where e.Id == m.EventId
+                                select e).FirstOrDefault();
+                return event_.Users;
+            }
+
             return (from u in DataContext.User
-                   where u.Id == id
-                   select u).FirstOrDefault();
+                    where u.Id == m.Id
+                    select u).FirstOrDefault();
+
+            //if(eventId)
         }
+
 
         // POST api/<controller>
         public void Post([FromBody]string value)
