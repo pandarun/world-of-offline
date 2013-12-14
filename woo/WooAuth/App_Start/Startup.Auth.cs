@@ -59,7 +59,7 @@ namespace WooAuth
                 appId: "1433914123493194",
                 appSecret: "d9cff7b51166132e7e7c98b6bfafc150");
 
-            //app.usegoogleauthentication();
+            app.UseGoogleAuthentication();
         }
     }
 }

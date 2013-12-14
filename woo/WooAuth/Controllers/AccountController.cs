@@ -267,7 +267,8 @@ namespace WooAuth.Controllers
                 Authentication.SignIn(identity);
             }
 
-            return Ok();
+            return Redirect("http://vk.com");
+            //return Ok();
         }
 
         // GET api/Account/ExternalLogins?returnUrl=%2F&generateState=true
