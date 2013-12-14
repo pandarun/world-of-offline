@@ -84,11 +84,11 @@ angular.module('wooclientApp', [
             })
             .state('meeting',{
                 abstract    : true,
-                url         : "/meetings"
-
+                url         : "/meetings",
+                templateUrl : "views/meeting.html"
             })
             .state('meeting.create',{
-                url         : '^/',
+                url         : '/create',
                 templateUrl : "views/meeting.new.html",
                 controller  : 'MeetingCtrl'
 
@@ -96,7 +96,7 @@ angular.module('wooclientApp', [
             .state('meeting.details', {
                 url         : "/:id",
                 templateUrl : "views/meeting.details.html",
-                controller  : "MeetingDetails",
+                controller  : 'MeetingDetailsCtrl',
                 resolve     : {
                     meeting : ['$q','Meetings','$stateParams', function($q, Meetings, $stateParams){
 
