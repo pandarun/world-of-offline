@@ -293,7 +293,7 @@ namespace WooAuth.Controllers
             //    Authentication.SignIn(identity);
             //}
             uniqName = HttpUtility.UrlEncodeUnicode(uniqName);
-            return Redirect("http://localhost:49451/Token/Index?token=" + uniqName);
+            return Redirect("http://woohoo.azurewebsites.net/Token/Index?token=" + uniqName);
             //return Ok();
         }
 
