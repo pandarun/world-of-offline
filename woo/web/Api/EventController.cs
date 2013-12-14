@@ -39,11 +39,20 @@ namespace web.Api
         }
 
         // GET api/<controller>/5
-        public Event Get(EventGetModel m)
+        public IEnumerable<Event> Get(int eventId)
         {
-            return (from e in DataContext.Event
-                   where e.Id == m.EventId
-                   select e).FirstOrDefault();
+                return from e in DataContext.Event
+                        where e.Id == eventId
+                        select e;
+        }
+
+        //events for user
+        public IEnumerable<Event> Get(int userId, int skip, int take)
+        {
+            int[] eventIds = _readSerachUtils.FindEventsForUser(userId, skip, take);
+            return from e in DataContext.Event
+                   where eventIds.Contains(e.Id)
+                   select e;
         }
 
         // create event
@@ -51,6 +60,7 @@ namespace web.Api
         {
             DataContext.Event.Add(e);
             DataContext.SaveChanges();
+            _searchUtils.IndexEvent(e, e.Users.ToArray());
         }
 
         /// <summary>
@@ -70,6 +80,7 @@ namespace web.Api
             event_.Users.Add(user);
             user.Events.Add(event_);
             DataContext.SaveChanges();
+            _searchUtils.IndexEvent(event_, event_.Users.ToArray());
         }
 
         // PUT api/<controller>/5
