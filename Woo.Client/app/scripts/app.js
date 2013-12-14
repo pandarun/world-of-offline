@@ -82,8 +82,8 @@ angular.module('wooclientApp', [
                 templateUrl: "views/meeting.list.html"
             })
             .state('meeting', {
-                url: "/list",
-                templateUrl: "views/meeting.html",
+                url: "/meetings/:id",
+                templateUrl: "views/meeting.details.html",
                 controller: 'MeetingCtrl'
             });
 
