@@ -1,15 +1,11 @@
-<form class="navbar-form navbar-left" role="search">
-    <div class="form-group">
+<form class="form-signin" role="form">
+    <h2 class="form-signin-heading">Заполните данные встречи</h2>
+    <label for="description">Описание</label>
+    <input id="Description" ng-model="data.description" type="text" class="form-control" placeholder="Описание" required="">
+    <label for="StartAt">Начало</label>
+    <input id="StartAt" ng-model="data.startAt" type="datetime-local" class="form-control" required="">
+    <label for="EndAt">Конец</label>
+    <input id="EndAt" ng-model="data.endAt" type="datetime-local" class="form-control" required="">
 
-        <label for="description">Описание</label>
-        <input id="Description" ng-model="data.description" type="text" class="form-control" placeholder="Описание" required="">
-
-        <label for="StartAt">Начало</label>
-        <input id="StartAt" ng-model="data.startAt" type="datetime-local" class="form-control" required="">
-
-        <label for="EndAt">Конец</label>
-        <input id="EndAt" ng-model="data.endAt" type="datetime-local" class="form-control" required="">
-
-    </div>
-    <button type="submit" class="btn btn-default" ng-click="submit()">Создать встречу</button>
+    <button type="submit" class="btn  btn-success  pull-right" ng-click="submit()">Создать встречу</button>
 </form>
