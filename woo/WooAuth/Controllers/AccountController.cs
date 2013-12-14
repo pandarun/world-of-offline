@@ -249,7 +249,7 @@ namespace WooAuth.Controllers
                 dc.User.Add(new User
                 {
                     AvatarPic = "http://graph.facebook.com/" + externalLogin.ProviderKey + "/picture?type=large",
-                    USerName = externalLogin.UserName
+                    UserName = externalLogin.UserName
                 });
             }
             
