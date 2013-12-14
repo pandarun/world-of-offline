@@ -5,6 +5,14 @@
     <ConfigurationSettings>
       <Setting name="ServiceBus" value="Endpoint=sb://woohoo.servicebus.windows.net/;SharedAccessKeyName=all;SharedAccessKey=Pf33dvf1c0+kOtOBvnW1lOeUB4BAQgrlm9/CK5J3YtI=" />
       <Setting name="Blob" value="DefaultEndpointsProtocol=https;AccountName=woohoo;AccountKey=wto0S0mWT7RmiEqlz2wtqUJZfxj+4T0qvfjjgK2VzhpfRFiKKZWp00Z6eZUaQPB/4bVfVwPSinQJ+UUhQQgJcA==" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="woo" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="MIIBnQYJKoZIhvcNAQcDoIIBjjCCAYoCAQAxggFOMIIBSgIBADAyMB4xHDAaBgNVBAMME1dpbmRvd3MgQXp1cmUgVG9vbHMCEGODdq2fJo2GSBW74aODESAwDQYJKoZIhvcNAQEBBQAEggEATP2Xwk1rEaEyaWL/vcjUbuPdW+DBVVwloCqP7zBldXzJZ4aKOM2CMEg+k9JcqKUIINQg8hHsQXaqV6sMwZ2+3b5fGKMykm1vl0pozsBEE9H6PwH/8o8oJjGny3ScU+L4aHjGpTFBKxlhW6raLi8AowR1XGE1cjkDvCoyy0yH+94z47V+GEXnMkBf5E58eQ9GDrqR1rqOzOwbJdTcP30qWabF5qTontXMDBIyZAPCKL2FaGEMNF3vwZtauIt7mLw+OjCOe4HS/1/s264d7NPtm4MAkd94GeREWxQYLLyBo30MnZfqIi34UwXrtSxOyo9AV1mnn2vAX3t6r5s48FrgejAzBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECPVJQs7NYmD2gBDTzwsgTvijmryHEsiI/sBr" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2014-12-14T23:59:59.0000000+04:00" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" value="true" />
     </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="84F65736682CEE6E70ED8879655D7599741D44F5" thumbprintAlgorithm="sha1" />
+    </Certificates>
   </Role>
 </ServiceConfiguration>

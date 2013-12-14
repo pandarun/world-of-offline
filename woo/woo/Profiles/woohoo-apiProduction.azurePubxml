@@ -4,7 +4,7 @@
     <AzureCredentials>{"ServiceManagementEndpoint":"https:\/\/management.core.windows.net\/","SubscriptionId":"dd187108-5605-4b18-baba-0aaa593283b9"}</AzureCredentials>
     <AzureDeleteDeploymentOnFailure>False</AzureDeleteDeploymentOnFailure>
     <AzureDeploymentLabel>woo</AzureDeploymentLabel>
-    <AzureDeploymentReplacementMethod>AutomaticUpgrade</AzureDeploymentReplacementMethod>
+    <AzureDeploymentReplacementMethod>DeleteAndCreate</AzureDeploymentReplacementMethod>
     <AzureSlot>Production</AzureSlot>
     <AzureEnableRemoteDesktop>True</AzureEnableRemoteDesktop>
     <AzureEnableWebDeploy>False</AzureEnableWebDeploy>
@@ -18,7 +18,7 @@
     <AzureStorageAccountLabel>bsicarww</AzureStorageAccountLabel>
     <AzureStorageAccountName>bsicarww</AzureStorageAccountName>
     <AzureAppendTimestampToDeploymentLabel>True</AzureAppendTimestampToDeploymentLabel>
-    <EnableRemoteDebugger>True</EnableRemoteDebugger>
+    <EnableRemoteDebugger>False</EnableRemoteDebugger>
     <RemoteDebuggerConnectorCertificateThumbprint>1C0225D8657A9A3BA0A1F6FAEF0C1B801A4E79CE</RemoteDebuggerConnectorCertificateThumbprint>
   </PropertyGroup>
 </Project>

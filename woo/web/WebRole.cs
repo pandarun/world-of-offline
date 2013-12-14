@@ -32,36 +32,32 @@ namespace web
             var readPath = RoleEnvironment.GetLocalResource("ReadStorage").RootPath;
             var writePath = RoleEnvironment.GetLocalResource("WriteStorage").RootPath;
 
-            var subscriptions = new[] { "lucene" };
+            var subscription = "lucene" ;
             var account = CloudStorageAccount.Parse(RoleEnvironment.GetConfigurationSettingValue("Blob"));
             var hub = new Hub(RoleEnvironment.GetConfigurationSettingValue("ServiceBus"));
-
-            var tasks = subscriptions.Select(s => Task.Run(() =>
+            
+            var criticalWait = Task.Run(() =>
             {
-                string combine = Path.Combine(readPath, s);
+                string writeFolder = Path.Combine(writePath, "lucene");
+                if (!System.IO.Directory.Exists(writeFolder))
+                {
+                    System.IO.Directory.CreateDirectory(writeFolder);
+                }
+                string combine = Path.Combine(readPath, subscription);
                 if (!System.IO.Directory.Exists(combine))
                 {
                     System.IO.Directory.CreateDirectory(combine);
                 }
+
                 var localDirectory = new Lucene.Net.Store.SimpleFSDirectory(new DirectoryInfo(combine));
-                var masterDirectory = new AzureDirectory(account, s);
+                var masterDirectory = new AzureDirectory(account, subscription);
                 var irs = new IntermediateReaderService(masterDirectory, hub, localDirectory, true);
 
                 masterDirectory.Dispose();
 
-                return new IndexInfo { IRS = irs as IDisposable, Directory = localDirectory };
-            }))
-                                     .ToArray();
-
-            var criticalToWait = Task.WhenAll(tasks)
-                .ContinueWith(_ => tasks.Where(t => !t.IsFaulted && t.IsCompleted).Select(t => t.Result).ToArray())
-                .ContinueWith(t => _localIndexes = t.Result);
-
-            string writeFolder = Path.Combine(writePath, "lucene");
-            if (!System.IO.Directory.Exists(writeFolder))
-            {
-                System.IO.Directory.CreateDirectory(writeFolder);
-            }
+                return new IndexInfo {IRS = irs as IDisposable, Directory = localDirectory};
+            })
+                .ContinueWith(t => _localIndexes = new[] {t.Result});
 
             _luceneWriter = new SearchWriterService(new AzureDirectory(account, "lucene", new Lucene.Net.Store.SimpleFSDirectory(new DirectoryInfo(writePath))), true);
             var subscriptionName = string.Format("{0:yyyyMMddHHmmss}_{1}", DateTime.UtcNow, Guid.NewGuid().ToString().Replace("-", string.Empty));
@@ -70,12 +66,9 @@ namespace web
                 {
                     _luceneTempInstanceSubscription = t.Result;
                     return hub.SubscribeWithRoutingKey("lucene", subscriptionName, OnSearchMessage)
-                               .ContinueWith(t2 => _luceneSearchSubscription = t.Result);
+                        .ContinueWith(t2 => _luceneSearchSubscription = t.Result);
                 })
-                .Unwrap()
-                .Wait();
-
-            criticalToWait.Wait();
+                .Unwrap();
 
             return base.OnStart();
         }
