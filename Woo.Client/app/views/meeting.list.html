@@ -1,13 +1,15 @@
 
-    <li class="list-group-item" ng-repeat="meeting in meetings">
-        <div ng-class="{approved : meeting.isApproved, visited : meeting.isVisited}" >
-            <span class="label label-info">{{meeting.participants.length}}</span>
-            {{meeting.description}}
-            <div class="row" style="margin: 5px 0 0 10px" >
+    <div ng-repeat="meeting in meetings">
+        <div ng-class="{'bs-callout-success' : meeting.isApproved, 'bs-callout-visited' : meeting.isVisited, 'bs-callout-request' : meeting.isRequest}" class="bs-callout " >
+            <p>{{meeting.description}}</p>
+            <div class="row">
+                <div class="col-md-1 center-block"><span class="label label-info">+ {{meeting.participants.length}}</span></div>
                 <div style="display: block; float: left;" ng-repeat="participant in meeting.participants">
                     <img ng-src="{{participant.imageSrc}}" width="60" height="60">
                 </div>
+                <div class="pull-right" style="margin-top: 12px">
+                    <button type="button" class="btn btn-danger btn-lg">+</button>
+                </div>
             </div>
         </div>
-
-    </li>
+    </div>

@@ -60,7 +60,7 @@ angular.module('wooclientApp')
             },
             {
                 description: "Хоккей в Сокольниках, приглашается команда в соперники. Не забудьте взять шайбу, а то будет как в прошлый раз :)).",
-
+                isRequest : true,
                 participants:[{
                     userId : 1,
                     name : "Вася",
