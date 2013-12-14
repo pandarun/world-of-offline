@@ -44,7 +44,6 @@ namespace web.Models
 
             var genericSearchItem = new GenericSearchItem(eventIndex);
             _hub.SendToTopicAsync("lucene", "any", genericSearchItem);
-
         }
     }
 }
