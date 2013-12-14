@@ -216,6 +216,10 @@
     <Compile Include="Migrations\201312131947427_first.Designer.cs">
       <DependentUpon>201312131947427_first.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201312140820493_usernames lool.cs" />
+    <Compile Include="Migrations\201312140820493_usernames lool.Designer.cs">
+      <DependentUpon>201312140820493_usernames lool.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Hub.cs" />
     <Compile Include="Models\Search.cs" />
@@ -281,6 +285,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201312131947427_first.resx">
       <DependentUpon>201312131947427_first.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201312140820493_usernames lool.resx">
+      <DependentUpon>201312140820493_usernames lool.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

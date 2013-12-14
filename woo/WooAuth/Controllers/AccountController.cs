@@ -241,18 +241,27 @@ namespace WooAuth.Controllers
                 return InternalServerError();
             }
 
-            var uniqName = externalLogin.LoginProvider + ":" + externalLogin.UserName;
-            uniqName = uniqName.Encrypt();
+            
             WooAuth.data.WooDataContext dc = new WooAuth.data.WooDataContext();
-            var usr = dc.User.FirstOrDefault(u => u.OAuthLogin == uniqName);
+            var usr = dc.User.FirstOrDefault(u => u.UserName == externalLogin.UserName && externalLogin.LoginProvider == u.Provider);
             if (usr == null) {
                 dc.User.Add(new User
                 {
+                    Provider = externalLogin.LoginProvider,
                     AvatarPic = "http://graph.facebook.com/" + externalLogin.ProviderKey + "/picture?type=large",
-                    USerName = externalLogin.UserName
+                    UserName = externalLogin.UserName
                 });
+                try
+                {
+                    dc.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("Не удалось создать пользователя");
+                }
             }
-            
+            var uniqName = externalLogin.LoginProvider + ":" + externalLogin.UserName;
+            uniqName = uniqName.Encrypt();
 
             //if (externalLogin.LoginProvider != provider)
             //{
@@ -284,7 +293,7 @@ namespace WooAuth.Controllers
             //    Authentication.SignIn(identity);
             //}
 
-            return Redirect("http://vk.com");
+            return Redirect("/Token?token=" + uniqName);
             //return Ok();
         }
 
