@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('wooclientApp', [
-  'ui.router'
+        'ui.router',
+        'ngResource'
 ])
   .config(function ($stateProvider, $urlRouterProvider,$provide,$httpProvider) {
         // For any unmatched url, redirect to /main
@@ -81,11 +82,37 @@ angular.module('wooclientApp', [
                 url : '',
                 templateUrl: "views/meeting.list.html"
             })
-            .state('meeting', {
-                url: "/meetings/:id",
-                templateUrl: "views/meeting.details.html",
-                controller: 'MeetingCtrl'
+            .state('meeting',{
+                url         : "/meetings",
+                controller  : 'MeetingCtrl',
+                resolve     : {
+                    meeting : ['$q','Meetings','$stateParams', function($q, Meetings, $stateParams){
+
+                        var deferred = $q.defer();
+
+                        var meeting = {};
+                        var meetingID = $stateParams.id;
+                        if(meetingID)
+                            meeting = Meetings.getMeetingById(meetingID);
+
+                        deferred.resolve(meeting);
+
+
+                        return deferred.promise;
+                    }]
+                }
+            })
+            .state('meeting.create',{
+                url         : '',
+                templateUrl : "views/meeting.new.html"
+
+            })
+            .state('meeting.details', {
+                url         : "/:id",
+                templateUrl : "views/meeting.details.html"
+
             });
+
 
         // auth interceptor config
 

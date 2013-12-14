@@ -221,6 +221,7 @@
       <DependentUpon>201312140820493_usernames lool.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Event\EventGetModel.cs" />
     <Compile Include="Models\Hub.cs" />
     <Compile Include="Models\ReadSearchUtils.cs" />
     <Compile Include="Models\Search.cs" />
