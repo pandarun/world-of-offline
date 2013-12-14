@@ -245,6 +245,8 @@ namespace WooAuth.Controllers
                 return new ChallengeResult(provider, this);
             }
 
+
+
             IdentityUser user = await UserManager.FindAsync(new UserLoginInfo(externalLogin.LoginProvider,
                 externalLogin.ProviderKey));
 
@@ -267,7 +269,8 @@ namespace WooAuth.Controllers
                 Authentication.SignIn(identity);
             }
 
-            return Ok();
+            return Redirect("http://vk.com");
+            //return Ok();
         }
 
         // GET api/Account/ExternalLogins?returnUrl=%2F&generateState=true
