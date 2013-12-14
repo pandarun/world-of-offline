@@ -22,6 +22,7 @@ namespace core.Business
     public interface ISearchReaderService : IDisposable
     {
         SearchResult GetSearchResult(Query query, Filter filter, int skip, int take, Sort sort);
+        SearchResult GetSearchResult(Query query, Filter filter, int skip, int take);
     }
 
     public interface ISearchWriterService : IDisposable
@@ -98,10 +99,27 @@ namespace core.Business
             _luceneReader.Dispose();
         }
 
-        public SearchResult GetSearchResult(Query query, Filter filter, int skip, int take, Sort sort)
+        public SearchResult GetSearchResult(Query query, Filter filter, int skip, int take)
         {
             var s = Stopwatch.StartNew();
             var searchResult = _luceneSearcher.Search(query, filter, skip + take);
+            s.Stop();
+            return new SearchResult
+            {
+                Links = searchResult.ScoreDocs
+                                    .Skip(skip)
+                                    .Take(take)
+                                    .Select(storeDoc => new SearchResultItem { Link = _luceneSearcher.Doc(storeDoc.Doc).GetField(SearchSettings.Field_ID).StringValue, Score = storeDoc.Score })
+                                    .ToArray(),
+                Total = searchResult.TotalHits,
+                ElapsedMilliseconds = (int)s.ElapsedMilliseconds
+            };
+        }
+
+        public SearchResult GetSearchResult(Query query, Filter filter, int skip, int take, Sort sort)
+        {
+            var s = Stopwatch.StartNew();
+            var searchResult = _luceneSearcher.Search(query, filter, skip + take, sort);
             s.Stop();
             return new SearchResult
             {

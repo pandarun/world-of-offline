@@ -222,6 +222,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Hub.cs" />
+    <Compile Include="Models\ReadSearchUtils.cs" />
     <Compile Include="Models\Search.cs" />
     <Compile Include="Models\SearchUtils.cs" />
     <Compile Include="Models\User\UserGetModel.cs" />

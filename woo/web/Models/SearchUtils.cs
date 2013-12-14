@@ -8,7 +8,12 @@ using woo.data.entity;
 
 namespace web.Models
 {
-    public class SearchUtils
+    public interface ISearchUtils
+    {
+        void IndexEvent(Event ev, woo.data.entity.User[] us);
+    }
+
+    public class SearchUtils : ISearchUtils
     {
         private readonly IHub _hub;
 
