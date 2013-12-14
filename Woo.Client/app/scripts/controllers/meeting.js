@@ -7,11 +7,11 @@ angular.module('wooclientApp')
 
         $scope.submit = function(){
 
-            var newMeeting = {};
-
-            newMeeting.since = $scope.data.startAt;
-            newMeeting.to = $scope.data.endAt;
-            newMeeting.summary = $scope.data.description;
+            var newMeeting = {
+                since : $scope.data.startAt,
+                to : $scope.data.endAt,
+                summary : $scope.data.description
+            };
 
             resourceFactory('event').save(newMeeting)
 
