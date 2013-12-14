@@ -16,9 +16,9 @@ namespace web.Api
             return DataContext.Event;
         }
 
-        public Event Get(string eventText)
+        public IEnumerable<Event> Get(string eventText, int skip, int take)
         {
-            return DataContext.Event.FirstOrDefault();
+            return DataContext.Event.Skip(skip).Take(take);
         }
 
         // GET api/<controller>/5
