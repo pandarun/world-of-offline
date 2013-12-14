@@ -5,9 +5,14 @@
 
         <img  class="pull-left" ng-src="{{user.imageSrc}}" width="60" height="60">
 
-        <h2>{{user.name}}</h2>
-
-
+        <h2>{{user.name}} <small class="pull-right">
+            <img src="/img/chronometer.png">
+            <img src="/img/gendarmery_france.png">
+            <img src="/img/hotfoodcheckpoint.png">
+            <img src="/img/lockerroom.png">
+            <img src="/img/lodging_cycling.png">
+        </small>
+        </h2>
 
         <div class="progress" style="margin: 10px 0 0 0">
             <div class="progress-bar progress-bar-success" style="width: 35%">
@@ -35,7 +40,7 @@
                 </div>
             </form>
         </div>
-        <div class="col-md2 col-md-2" style="display: block;">
+        <div class="col-md-2" style="display: block;">
             <div class="form-group">
               <!--  <label>
                     Начало
