@@ -17,7 +17,7 @@ namespace WooAuth
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new {controller = "Home", action = "Index", id = UrlParameter.Optional},
-                namespaces: new[] {"WooAuth.Controllers"}
+                namespaces: new[] { "WooAuth.Controllers" }
                 );
         }
     }
