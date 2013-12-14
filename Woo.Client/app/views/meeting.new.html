@@ -1,11 +1,24 @@
 <form class="form-signin" role="form">
-    <h2 class="form-signin-heading">Заполните данные встречи</h2>
-    <label for="description">Описание</label>
+    <h2 class="form-signin-heading">Новая встреча</h2>
     <input id="Description" ng-model="data.description" type="text" class="form-control" placeholder="Описание" required="">
-    <label for="StartAt">Начало</label>
-    <input id="StartAt" ng-model="data.startAt" type="datetime-local" class="form-control" required="">
-    <label for="EndAt">Конец</label>
-    <input id="EndAt" ng-model="data.endAt" type="datetime-local" class="form-control" required="">
 
-    <button type="submit" class="btn  btn-success  pull-right" ng-click="submit()">Создать встречу</button>
+    <div style="margin-top: 15px">
+    <div>
+        <div class="pull-left"  >
+            <span class="label label-default">с</span>
+        </div>
+
+        <div class="col-md-4 pull-left">
+            <input id="StartAt" ng-model="data.startAt" type="datetime-local" class="form-control" required="">
+        </div>
+        <div class="pull-left"  >
+            <span class="label label-default">по</span>
+        </div>
+        <div class="col-md-4  pull-left">
+            <input id="EndAt" ng-model="data.endAt" type="datetime-local" class="form-control" required="">
+        </div>
+    </div>
+    </div>
+
+    <button type="submit" class="btn  btn-success" ng-click="submit()">Создать</button>
 </form>
