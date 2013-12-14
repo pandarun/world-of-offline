@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace woo.data.entity
+namespace WooAuth.data.entity
 {
     public class User
     {
@@ -12,6 +12,7 @@ namespace woo.data.entity
         public string UserName { get; set; }
         public string Provider { get; set; }
         public string AvatarPic { get; set; }
+
         public string OAuthLogin { get; set; }
 
         public virtual ICollection<Event> Events { get; set; }

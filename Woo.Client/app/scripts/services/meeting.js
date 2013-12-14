@@ -6,6 +6,7 @@ angular.module('wooclientApp')
 
         var meetings = [
             {
+                id : 1,
                 description: "Тематическая вечеринка в Парке Горького, приглашаются все желающие, приводите своих друзей и знакомых! Будет весело!",
                 isVisited : true,
                 participants:[{
@@ -32,6 +33,7 @@ angular.module('wooclientApp')
                     }]
             },
             {
+                id : 2,
                 description: "Схожу в кино с девушкой, желательно на комедию.",
                 isApproved : true,
                 participants:[{
@@ -59,6 +61,7 @@ angular.module('wooclientApp')
 
             },
             {
+                id : 3,
                 description: "Хоккей в Сокольниках, приглашается команда в соперники. Не забудьте взять шайбу, а то будет как в прошлый раз :)).",
                 isRequest : true,
                 participants:[{
@@ -85,6 +88,7 @@ angular.module('wooclientApp')
                     }]
             },
             {
+                id : 4,
                 description: "Хоккей в Сокольниках, приглашается команда в соперники. Не забудьте взять шайбу, а то будет как в прошлый раз :)).",
                 isApproved : true,
                 participants:[{

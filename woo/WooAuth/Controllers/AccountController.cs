@@ -16,6 +16,8 @@ using Microsoft.Owin.Security.OAuth;
 using WooAuth.Models;
 using WooAuth.Providers;
 using WooAuth.Results;
+using WooAuth.Utils;
+using WooAuth.data.entity;
 
 namespace WooAuth.Controllers
 {
@@ -239,35 +241,48 @@ namespace WooAuth.Controllers
                 return InternalServerError();
             }
 
-            if (externalLogin.LoginProvider != provider)
-            {
-                Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-                return new ChallengeResult(provider, this);
+            var uniqName = externalLogin.LoginProvider + ":" + externalLogin.UserName;
+            uniqName = uniqName.Encrypt();
+            WooAuth.data.WooDataContext dc = new WooAuth.data.WooDataContext();
+            var usr = dc.User.FirstOrDefault(u => u.OAuthLogin == uniqName);
+            if (usr == null) {
+                dc.User.Add(new User
+                {
+                    AvatarPic = "http://graph.facebook.com/" + externalLogin.ProviderKey + "/picture?type=large",
+                    USerName = externalLogin.UserName
+                });
             }
+            
+
+            //if (externalLogin.LoginProvider != provider)
+            //{
+            //    Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
+            //    return new ChallengeResult(provider, this);
+            //}
 
 
 
-            IdentityUser user = await UserManager.FindAsync(new UserLoginInfo(externalLogin.LoginProvider,
-                externalLogin.ProviderKey));
+            //IdentityUser user = await UserManager.FindAsync(new UserLoginInfo(externalLogin.LoginProvider,
+            //    externalLogin.ProviderKey));
 
-            bool hasRegistered = user != null;
+            //bool hasRegistered = user != null;
 
-            if (hasRegistered)
-            {
-                Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-                ClaimsIdentity oAuthIdentity = await UserManager.CreateIdentityAsync(user,
-                    OAuthDefaults.AuthenticationType);
-                ClaimsIdentity cookieIdentity = await UserManager.CreateIdentityAsync(user,
-                    CookieAuthenticationDefaults.AuthenticationType);
-                AuthenticationProperties properties = ApplicationOAuthProvider.CreateProperties(user.UserName);
-                Authentication.SignIn(properties, oAuthIdentity, cookieIdentity);
-            }
-            else
-            {
-                IEnumerable<Claim> claims = externalLogin.GetClaims();
-                ClaimsIdentity identity = new ClaimsIdentity(claims, OAuthDefaults.AuthenticationType);
-                Authentication.SignIn(identity);
-            }
+            //if (hasRegistered)
+            //{
+            //    Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
+            //    ClaimsIdentity oAuthIdentity = await UserManager.CreateIdentityAsync(user,
+            //        OAuthDefaults.AuthenticationType);
+            //    ClaimsIdentity cookieIdentity = await UserManager.CreateIdentityAsync(user,
+            //        CookieAuthenticationDefaults.AuthenticationType);
+            //    AuthenticationProperties properties = ApplicationOAuthProvider.CreateProperties(user.UserName);
+            //    Authentication.SignIn(properties, oAuthIdentity, cookieIdentity);
+            //}
+            //else
+            //{
+            //    IEnumerable<Claim> claims = externalLogin.GetClaims();
+            //    ClaimsIdentity identity = new ClaimsIdentity(claims, OAuthDefaults.AuthenticationType);
+            //    Authentication.SignIn(identity);
+            //}
 
             return Redirect("http://vk.com");
             //return Ok();

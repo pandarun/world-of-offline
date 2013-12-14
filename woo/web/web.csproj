@@ -174,7 +174,9 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\ActivityController.cs" />
     <Compile Include="Api\BaseApiController.cs" />
+    <Compile Include="Api\EventController.cs" />
     <Compile Include="Api\MessageController.cs" />
     <Compile Include="Api\UserController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />

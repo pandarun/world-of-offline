@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace woo.data.entity
+namespace WooAuth.data.entity
 {
     public class Activity
     {
@@ -14,8 +14,6 @@ namespace woo.data.entity
         public DateTime To { get; set; }
 
         public int UserId { get; set; }
-
-        public string Text { get; set; }
 
         public virtual User User { get; set; }
     }
